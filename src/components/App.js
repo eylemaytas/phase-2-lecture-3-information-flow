@@ -6,7 +6,9 @@ function App() {
 
   const [searchText, setSearchText] = useState("")
 
-  const pets = [
+  const [pets, setPets] = useState([
+
+ 
     {
         id: 1,
         name: "Fido",
@@ -42,8 +44,10 @@ function App() {
         name: "Goldie",
         image: "./images/fish.jpeg"
     }
-  ]
-
+  ])
+// console.log(pets)
+// pets.pop()
+// console.log(pets)
   const filteredPets = pets.filter(pet => {
     if(searchText === ""){
       return true
@@ -51,10 +55,18 @@ function App() {
     return pet.name.toUpperCase().includes(searchText.toUpperCase())
   })
 
+  function adoptPet(id) {
+    setPets(pets.filter(pet => {
+      return pet.id !== id
+    }))
+  }
   return (
     <div className="app">
       <Header />
-      <PetPage pets={filteredPets} setSearchText={setSearchText} />
+      <PetPage pets={filteredPets} setSearchText={setSearchText} adoptPet= {adoptPet} />
+      {/* <button onClick={() => {
+        setPets(pets.slice(0, -1))
+      }}>DELETE PET</button> */}
     </div>
   );
 }
